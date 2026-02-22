@@ -1,35 +1,111 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+    <div className="app">
+
+      {/* Navbar */}
+      <nav className="navbar">
+        <h2>Feyn</h2>
+
+        <div className="nav-links">
+          <a href="#features" className="pad">Features</a>
+          <a href="#about" className="pad">About</a>
+          <button className="login-btn">Login</button>
+        </div>
+      </nav>
+
+
+      {/* Hero Section */}
+      <section className="hero">
+
+        <div className="hero-content">
+
+          <h1>Find Nearby Shops & Products Instantly</h1>
+
+          <p>
+            Discover local stores near you, browse products,
+            and order easily from your phone.
+          </p>
+
+          <div className="hero-buttons">
+            <button className="primary-btn">Get Started</button>
+            <button className="secondary-btn">Learn More</button>
+          </div>
+
+        </div>
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png"
+          alt="shopping"
+          className="hero-image"
+        />
+
+      </section>
+
+
+      {/* Features Section */}
+      <section className="features" id="features">
+
+        <h2>Why Choose Feyn?</h2>
+
+        <div className="feature-box">
+
+          <div className="card">
+            <h3>📍 Location Based</h3>
+            <p>See shops near your current location.</p>
+          </div>
+
+          <div className="card">
+            <h3>🛒 Easy Shopping</h3>
+            <p>Browse and order products instantly.</p>
+          </div>
+
+          <div className="card">
+            <h3>💬 Chat Support</h3>
+            <p>Chat directly with shop owners.</p>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* About Section */}
+      <section className="about" id="about">
+
+        <h2>Support Your Local Business</h2>
+
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          Our platform helps small shop owners connect
+          with customers easily and grow their business.
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      </section>
+
+
+      {/* CTA Section */}
+      <section className="cta">
+
+        <h2>Start Shopping Locally Today</h2>
+
+        <p>Login and explore nearby shops now.</p>
+
+        <button className="primary-btn">Login Now</button>
+
+      </section>
+
+
+      {/* Footer */}
+      <footer className="footer">
+
+        <p>© 2026 Feyn | All Rights Reserved</p>
+
+      </footer>
+
+    </div>
+  );
 }
 
-export default App
+export default App;
