@@ -1,3 +1,7 @@
+import { Routes, Route } from "react-router-dom";
+
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
 import React from "react";
 import "./App.css";
 
@@ -5,16 +9,10 @@ function App() {
   return (
     <div className="app">
 
-      {/* Navbar */}
-      <nav className="navbar">
-        <h2>Feyn</h2>
-
-        <div className="nav-links">
-          <a href="#features" className="pad">Features</a>
-          <a href="#about" className="pad">About</a>
-          <button className="login-btn">Login</button>
-        </div>
-      </nav>
+      <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
 
 
       {/* Hero Section */}
