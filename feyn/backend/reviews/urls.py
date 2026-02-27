@@ -1,5 +1,7 @@
 from django.urls import path
+from .views import ReviewListCreateAPIView
 
 urlpatterns = [
-    # empty for now (we’ll add later)
+    path('', ReviewListCreateAPIView.as_view())
 ]
+
