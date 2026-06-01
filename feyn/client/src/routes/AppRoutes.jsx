@@ -7,6 +7,8 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import Shop from "../pages/Shop";
 import Dashboard from "../pages/Dashboard";
+import ServiceProviders from "../pages/ServiceProviders";
+
 
 function AppRoutes() {
   return (
@@ -17,6 +19,7 @@ function AppRoutes() {
         <Route path="/shop/:id" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/service-providers" element={<ServiceProviders />} />
       </Route>
 
       {/* Dashboard layout */}

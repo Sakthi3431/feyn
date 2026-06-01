@@ -3,58 +3,65 @@ import api from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
 function Dashboard() {
-    const {authTokens}=useContext(AuthContext);
-    const [shop, setShop] = useState(null);
-    const [formData, setFormData] = useState({
-        name: "",
-        address: "",
-        area_type: "city",
-    });
+  const { authTokens } = useContext(AuthContext);
 
-    useEffect(() => {
-        const fetchMyShop = async ()=>{
-            try {
-                const response = await api.get("shops/", {
-                    headers: {
-                        Authorization: `Bearer ${authTokens?.access}`,
-                    },
-                });
-                if (response.data.length > 0) {
-                setShop(response.data[0]);
-                }
-            } catch (error) {
-             console.error(error);
-             }
-        };
+  const [shop, setShop] = useState(null)
+  const [loading, setLoading] = useState(true);
 
-        fetchMyShop();
-    }, [authTokens]);
-    const handleChange = (e) => {
-        setFormData({
-        ...formData,
-        [e.target.name]: e.target.value,
+  const [formData, setFormData] = useState({
+    name: "",
+    address: "",
+    area_type: "city",
+  });
+
+  useEffect(() => {
+    const fetchMyShop = async () => {
+      try {
+        const res = await api.get("shops/", {
+          headers: {
+            Authorization: `Bearer ${authTokens?.access}`,
+          },
         });
-        };
-        const createShop = async (e) => {
-            e.preventDefault();
-            try {
-            const response = await api.post("shops/", formData, {
-                headers: {
-                    Authorization: `Bearer ${authTokens?.access}`,
-                },
-            });
-            setShop(response.data);
-        } catch (error) {
-            alert("Error creating shop");
+        if (res.data.length > 0) {
+          setShop(res.data[0]);
         }
+      }catch (error) {
+        console.error(error);
+      }
+      setLoading(false);
     };
-return (
-    <div className="p-8 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+    fetchMyShop();
+  }, [authTokens]);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const createShop = async (e) => {
+    e.preventDefault();
 
-      {!shop ? (
-        <form
-          onSubmit={createShop}
+    try{
+      const res = await api.post("shops/", formData, {
+        headers: {
+          Authorization: `Bearer ${authTokens?.access}`,
+        },
+      });
+      setShop(res.data);
+    } catch (error){
+      console.log(error.response.data);
+    }
+  };
+
+  if(loading) return <div className="">Loading...</div>
+
+  return (
+    <>
+    <div className="p-8 min-h-screen bg-gray-100">
+      <h1 className="text-3xl font-bold mb-6">Seller Dashboard</h1>
+{!shop ? (
+  <form
+  onSubmit={createShop}
           className="bg-white p-6 rounded-xl shadow w-96"
         >
           <h2 className="text-xl font-semibold mb-4">
@@ -95,12 +102,31 @@ return (
         </form>
       ) : (
         <div className="bg-white p-6 rounded-xl shadow">
-          <h2 className="text-xl font-semibold">{shop.name}</h2>
-          <p>{shop.address}</p>
-          <p className="text-sm text-gray-500">{shop.area_type}</p>
+          <h2 className="text-xl font-semibold mb-2">
+            {shop.name}
+          </h2>
+
+          <p className="text-gray-600">{shop.address}</p>
+
+          <p className="text-sm text-gray-500 mt-2">
+            Area Type: {shop.area_type}
+          </p>
         </div>
       )}
+      <div className="p-4 flex items-end justify-end">
+        <button type="button" className="bg-blue-500 px-4 py-1 rounded-full hover:bg-blue-700">add</button>
+      </div>
     </div>
+    <div className="w-screen h-20 bg-gray-400 text-black fixed bottom-0 left-0">
+      <div className="flex justify-between p-5">
+        <div><img src="ecommerce.png" alt="Add Products" className="w-10 h-10"/></div>
+        <div><img src="features.png" alt="Add Products" className="w-10 h-10"/></div>
+        <div><img src="crown.png" alt="Add Products" className="w-10 h-10"/></div>
+        <div><img src="data-analytics.png" alt="Add Products" className="w-10 h-10"/></div>
+      </div>
+    </div>
+    
+  </>
   );
 }
 
