@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+.card {
+  background: #f5f7fb;
+  width: 10%;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  margin: 5px;
+}
+.card:hover{
+  box-shadow: 0 5px 15px rgb(171, 146, 240);
+}

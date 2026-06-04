@@ -5,7 +5,8 @@ function ServiceProviders(){
     
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("all");
-    
+
+
     const cardStyle = {
         width: "250px",
         background: "#fff",

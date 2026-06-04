@@ -118,14 +118,6 @@ body {
   flex-wrap: wrap;
 }
 
-.card {
-  background: #f5f7fb;
-  width: 250px;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
 .card h3 {
   margin-bottom: 10px;
 }

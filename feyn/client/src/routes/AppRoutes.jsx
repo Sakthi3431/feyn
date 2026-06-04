@@ -8,7 +8,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Shop from "../pages/Shop";
 import Dashboard from "../pages/Dashboard";
 import ServiceProviders from "../pages/ServiceProviders";
-
+import Ui from "../pages/ui";
 
 function AppRoutes() {
   return (
@@ -20,6 +20,8 @@ function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/service-providers" element={<ServiceProviders />} />
+        <Route path="/ui" element={<Ui />} />
+
       </Route>
 
       {/* Dashboard layout */}
