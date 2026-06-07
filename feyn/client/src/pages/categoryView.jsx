@@ -16,4 +16,4 @@ function categoryView() {
   )
 }
 
-export default categoryView
+export default categoryView;
