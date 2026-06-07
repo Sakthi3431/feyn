@@ -9,13 +9,16 @@ function ProductImages({product}) {
   }
   return (
     <div className="pcard-img-wrap">
-        <img src={product.image} alt={product.name} className="pcard-img" loading="lazy" />
+        <img 
+        src={product.image} 
+        alt={product.name} 
+        className="pcard-img" 
+        loading="lazy" />
         <div className='flex m-4 justify-between'>
             <img src={product.image} alt={product.name} className="pcard-sm-img" loading="lazy" />
             <img src={product.image} alt={product.name} className="pcard-sm-img" loading="lazy" />
             <img src={product.image} alt={product.name} className="pcard-sm-img" loading="lazy" />
         </div>
-        
       </div>
   )
 }

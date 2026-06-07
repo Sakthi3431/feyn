@@ -18,7 +18,7 @@ function Navbar({ searchTerm, setSearchTerm }) {
             value={searchTerm}
             />
             
-        <img src="src/assets/cart.png" alt="" className="w-10 ml-170"/>
+        <img src="src/assets/cart.png" alt="" className="w-10"/>
 
       <div className="space-x-4">
         {user ? (
