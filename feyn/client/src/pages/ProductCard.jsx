@@ -27,7 +27,7 @@ export default function ProductCard() {
     ]
   }/>
   
-  <div className="pcard flex flex-col">
+  <div className="pcard flex flex-col md:flex-row gap-10">
   <ProductImages product= {product}/>
   <ProductDetails product= {product} />
       
