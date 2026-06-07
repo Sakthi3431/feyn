@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
-function ProductDetails({product, onAddCart}) {
+function ProductDetails({product}) {
     if (!product) {
     return <h2>Product not found</h2>;
   } 
