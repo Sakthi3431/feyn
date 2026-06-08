@@ -3,7 +3,7 @@ import products from "../data/products.js"
 import BreadCrumb from "../components/BreadCrumb.jsx"
 import ProductImages from '../components/ProductImages.jsx';
 import ProductDetails from '../components/ProductDetails.jsx';
-
+import Navbar from "../components/Navbar.jsx"
 export default function ProductCard() {
   const { category, id } = useParams();
 
@@ -16,6 +16,7 @@ export default function ProductCard() {
   }
   return (
     <div className="container mx-auto p-4">    
+    <Navbar/>
   <BreadCrumb product={product} items={
     [
       {label: "Home", path: "/"},
@@ -27,8 +28,8 @@ export default function ProductCard() {
   
   <div className="pcard flex flex-col md:flex-row gap-10">
   <ProductImages product= {product}/>
-  <ProductDetails product= {product} />
-      
+  <ProductDetails />
+  
     </div>
     </div>
   );

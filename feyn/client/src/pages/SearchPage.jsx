@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "../css/SearchPage.css";
+
 
 /* ─── DATA ─── */
 const ALL_PRODUCTS = [
