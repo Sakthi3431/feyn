@@ -9,7 +9,8 @@ import Shop from "../pages/Shop";
 import Dashboard from "../pages/Dashboard";
 import ServiceProviders from "../pages/ServiceProviders";
 import ProductCard from "../pages/ProductCard";
-import ProductDetails from "../ProductDetails";
+import ProductDetails from "../pages/ProductDetails";
+import SearchPage from "../pages/SearchPage";
 
 
 function AppRoutes() {
@@ -24,6 +25,7 @@ function AppRoutes() {
         <Route path="/service-providers" element={<ServiceProviders />} />
         <Route path="/product-card/:category/:id" element={<ProductCard />} />
         <Route path="/product-card/temp" element={<ProductDetails/>} />
+        <Route path="/product-card/search" element={<SearchPage/>} />
 
       </Route>
 

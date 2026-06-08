@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 .card {
   background: #f5f7fb;
   width: 10%;
@@ -64,4 +65,21 @@
 
 .buynow{
   width: 100%;
+}
+
+.navbarowncss {
+  background: #4a9dec;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+.navbarlogin{
+  color: var(--color-gray-700);
+}
+.navbarlogin:hover {
+    &:hover {
+        @media (hover: hover) {
+            color: var(--color-blue-600) /* oklch(54.6% 0.245 262.881) = #155dfc */;
+        }
+    }
 }

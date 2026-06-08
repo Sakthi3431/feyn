@@ -1,60 +1,35 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import "../index.css";
+import "../css/ProductDetails.css"
 function Navbar({ searchTerm, setSearchTerm }) {
   const { user, logoutUser } = useContext(AuthContext);
   
   return (
-    <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
-      <Link to="/" className="text-xl font-bold text-blue-600">
-        LocalMart
-      </Link>
-      <input 
-            type="text" 
-            className="searchbar" 
-            placeholder="Search"
-            onChange={(e)=> setSearchTerm(e.target.value)}
-            value={searchTerm}
-            />
-            
-        <img src="src/assets/cart.png" alt="" className="w-10"/>
-
-      <div className="space-x-4">
-        {user ? (
-          <>
-            <Link
-              to="/dashboard"
-              className="text-gray-700 hover:text-blue-600"
-            >
-              Dashboard
+    <>
+    <nav className="pdp-nav">
+        <div className="pdp-nav-inner">
+          <div className="pdp-logo">
+            <Link to="/">
+            <span className="pdp-logo-text">Feyn</span>
             </Link>
-
-            <button
-              onClick={logoutUser}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg"
-            >
-              Logout
+          </div>
+          <div className="pdp-search-bar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" placeholder="Search for products, brands and more" onChange={(e)=> setSearchTerm(e.target.value)}
+            value={searchTerm} />
+          </div>
+          <div className="pdp-nav-actions">
+            <button className="pdp-nav-btn">Login</button>
+            <button className="pdp-nav-btn pdp-cart-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+              Cart
             </button>
-          </>
-        ) : (
-          <>
-            <Link
-              to="/login"
-              className="text-gray-700 hover:text-blue-600"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-            >
-              Register
-            </Link>
-          </>
-        )}
-      </div>
-    </nav>
+          </div>
+        </div>
+      </nav>
+            </>
+  
   );
 }
 

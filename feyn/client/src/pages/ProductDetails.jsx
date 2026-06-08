@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./ProductDetails.css";
+import  "../css/ProductDetails.css"
 
 const product = {
   name: "REDMI Note 15 SE 5G",
@@ -87,13 +87,14 @@ export default function ProductDetails() {
   };
 
   return (
+    <div className='product-details-page'>
+
     <div className="pdp-root">
       {/* Top Nav */}
       <nav className="pdp-nav">
         <div className="pdp-nav-inner">
           <div className="pdp-logo">
-            <span className="pdp-logo-f">F</span>
-            <span className="pdp-logo-text">lipkart</span>
+            <span className="pdp-logo-text">Feyn</span>
           </div>
           <div className="pdp-search-bar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -108,14 +109,6 @@ export default function ProductDetails() {
           </div>
         </div>
       </nav>
-
-      {/* Breadcrumb */}
-      <div className="pdp-breadcrumb">
-        <span>Home</span><span className="sep">›</span>
-        <span>Mobiles</span><span className="sep">›</span>
-        <span>Redmi</span><span className="sep">›</span>
-        <span className="active">Redmi Note 15 SE 5G</span>
-      </div>
 
       {/* Main Content */}
       <div className="pdp-main">
@@ -373,6 +366,7 @@ export default function ProductDetails() {
           <p className="pdp-footer-copy">© 2025 Flipkart. Product listing for demonstration purposes.</p>
         </div>
       </footer>
+    </div>
     </div>
   );
 }
