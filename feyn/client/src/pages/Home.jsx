@@ -5,13 +5,15 @@ import Footer from "../components/Footer";
 import CategoryBar from "../components/CategoryBar";
 import { useState } from "react";
 import products from "../data/products";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function App() {
+
     const [searchTerm, setSearchTerm] = useState("");
       const searchedProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
     return (
         <>
     <Navbar
@@ -25,7 +27,7 @@ export default function App() {
       key={product.id}
       className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden"
     >
-      <Link to={`/product-card/${product.id}`}>
+      <Link to={`/product-card/${product.category}/${product.id}`}>
         <img
           src={product.image}
           alt={product.name}

@@ -9,6 +9,7 @@ import Shop from "../pages/Shop";
 import Dashboard from "../pages/Dashboard";
 import ServiceProviders from "../pages/ServiceProviders";
 import ProductCard from "../pages/ProductCard";
+import ProductDetails from "../ProductDetails";
 
 
 function AppRoutes() {
@@ -21,7 +22,8 @@ function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/service-providers" element={<ServiceProviders />} />
-        <Route path="/product-card/:id" element={<ProductCard />} />
+        <Route path="/product-card/:category/:id" element={<ProductCard />} />
+        <Route path="/product-card/temp" element={<ProductDetails/>} />
 
       </Route>
 

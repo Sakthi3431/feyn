@@ -45,9 +45,23 @@
   width: 60%;
   padding: 15px 50px;
 }
+
+@media (max-width: 768px){
+  .pcard-body{
+    width: 100%;
+    padding: 15px 50px;
+  }
+  .pcard-name{
+  font-size: 36px;
+  }
+}
 .pcard-name{
   font-size: 22px;
 }
 .pcard-price{
   font-size: 22px;
+}
+
+.buynow{
+  width: 100%;
 }

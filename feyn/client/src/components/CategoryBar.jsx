@@ -53,7 +53,7 @@ function CategoryBar() {
       key={product.id}
       className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden"
     >
-      <Link to={`/product-card/${product.id}`}>
+      <Link to={`/product-card/${product.category}/${product.id}`}>
         <img
           src={product.image}
           alt={product.name}
