@@ -1,8 +1,8 @@
 import "../index.css";
-import Hero from "../components/Hero";
+import Hero from "../components/Home/Hero";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import CategoryBar from "../components/CategoryBar";
+import CategoryBar from "../components/Home/CategoryBar";
 import { useState } from "react";
 import products from "../data/products";
 import { Link, useParams } from "react-router-dom";

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import TrendingProducts from "../components/TrendingProducts";
+import TrendingProducts from "../components/Home/TrendingProducts";
 
 function DashboardLayout() {
     return (

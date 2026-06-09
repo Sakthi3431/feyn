@@ -7,10 +7,10 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import Shop from "../pages/Shop";
 import Dashboard from "../pages/Dashboard";
-import ServiceProviders from "../pages/ServiceProviders";
 import ProductCard from "../pages/ProductCard";
-import ProductDetails from "../pages/ProductDetails";
 import SearchPage from "../pages/SearchPage";
+import Cart from "../pages/Cart";
+import Wishlist from "../pages/Wishlist";
 
 
 function AppRoutes() {
@@ -22,11 +22,10 @@ function AppRoutes() {
         <Route path="/shop/:id" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/service-providers" element={<ServiceProviders />} />
         <Route path="/product-card/:category/:id" element={<ProductCard />} />
-        <Route path="/product-card/temp" element={<ProductDetails/>} />
         <Route path="/product-card/search" element={<SearchPage/>} />
-
+        <Route path="/cart" element={<Cart/>} />
+        <Route path="/wishlist" element={<Wishlist/>} />
       </Route>
 
       {/* Dashboard layout */}

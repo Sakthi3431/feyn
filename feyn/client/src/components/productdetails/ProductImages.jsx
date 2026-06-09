@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import products from '../data/products';
+import products from '../../data/products';
 import { Link, useParams } from 'react-router-dom';
 
 
