@@ -6,7 +6,7 @@ function Hero() {
     color: "white",
     border: "none",
     borderRadius: "5px",
-    cursor: "pointer"
+    cursor: "pointer" 
 };
   return (
     <section style={
