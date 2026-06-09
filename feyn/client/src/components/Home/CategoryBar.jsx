@@ -70,7 +70,7 @@ function CategoryBar() {
           </p>
         </div>
       </Link>
-
+ 
       <div className="p-4 pt-0">
         <button
           className="w-full text-white py-2 rounded-lg hover:bg-orange-600"
