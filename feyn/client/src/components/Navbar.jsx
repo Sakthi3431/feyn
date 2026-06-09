@@ -4,7 +4,6 @@ import { AuthContext } from "../context/AuthContext";
 import "../css/ProductDetails.css"
 function Navbar({ searchTerm, setSearchTerm }) {
   const { user, logoutUser } = useContext(AuthContext);
-  
   return (
     <>
     <nav className="pdp-nav">
