@@ -2,7 +2,6 @@ import React from 'react'
 
 function Footer() {
   return (
-
     <>
     <div style={{fontFamily: "ariel, sans-serif"}}>
         <section style={{
