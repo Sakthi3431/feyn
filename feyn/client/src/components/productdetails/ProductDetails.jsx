@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 
 function ProductDetails({}) {
     const [selectedVariant, setSelectedVariant] = useState(0);
@@ -9,6 +10,8 @@ function ProductDetails({}) {
     const [wishlist, setWishlist] = useState(false);
     const [addedToCart, setAddedToCart] = useState(false);
     const [imgErrors, setImgErrors] = useState({});
+    const {addToCart} = useCart();
+
   
   const product = {
   name: "REDMI Note 15 SE 5G",
@@ -65,8 +68,7 @@ const images = [
   "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/i/7/c/-original-imah7affhmqghkqv.jpeg?q=70",
 ];
   const handleAddToCart = () => {
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
+    addToCart(product);
   };
 const variant = product.variants[selectedVariant];
     if (!product) {
