@@ -67,9 +67,18 @@ const images = [
   "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/l/0/p/-original-imah7affxfg6zfwy.jpeg?q=70",
   "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/i/7/c/-original-imah7affhmqghkqv.jpeg?q=70",
 ];
-  const handleAddToCart = () => {
-    addToCart(product);
-  };
+const handleAddToCart = () => {
+  console.log("button clicked")
+  addToCart({
+    id: variant.pid,
+    name: product.name,
+    image: images[0],
+    price: variant.price,
+    mrp: variant.originalPrice,
+    variant: `${variant.ram} RAM / ${variant.storage}`,
+    spec: product.subtitle,
+  });
+};
 const variant = product.variants[selectedVariant];
     if (!product) {
     return <h2>Product not found</h2>;

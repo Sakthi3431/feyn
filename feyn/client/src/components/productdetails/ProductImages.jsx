@@ -19,11 +19,17 @@ function ProductImages({ product }) {
     discount: 0
   };
 
-  const handleAddToCart = () => {
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
-  };
-
+const handleAddToCart = () => {
+  addToCart({
+    id: variant.pid,
+    name: product.name,
+    image: images[0],
+    price: variant.price,
+    mrp: variant.originalPrice,
+    variant: `${variant.ram} RAM / ${variant.storage}`,
+    spec: product.subtitle,
+  });
+};
   const handleImgError = (idx) => {
     setImgErrors((prev) => ({
       ...prev,
