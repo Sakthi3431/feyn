@@ -18,6 +18,8 @@ def login_view(request):
     email = request.data.get('email')
     password = request.data.get('password')
     user = authenticate(request, username=email, password=password)
+    print("EMAIL:", email)
+    print("PASSWORD:", password)
     if user:
         refresh = RefreshToken.for_user(user)
         return Response({

@@ -2,10 +2,11 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "../css/Auth.css";
+import login from '../services/api';
 function Login() {
   const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,8 +14,8 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await loginUser(formData.username, formData.password);
-    navigate("/dashboard");
+    await loginUser(formData.email, formData.password);
+    navigate('/');
   };
 
   return (
@@ -30,11 +31,11 @@ function Login() {
 
         <form onSubmit={handleSubmit}>
           <div className="auth-input-group">
-            <label className="auth-label">Username</label>
+            <label className="auth-label">Email</label>
             <input
               type="text"
-              name="username"
-              placeholder="Enter your username"
+              name="email"
+              placeholder="Enter your email"
               className="auth-input"
               onChange={handleChange}
             />
@@ -55,7 +56,7 @@ function Login() {
         </form>
 
         <p className="auth-footer">
-          Don't have an account?{" "}
+          Don't have an account?
           <Link to="/register">Create one</Link>
         </p>
       </div>

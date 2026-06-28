@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { AuthContext } from "../context/AuthContext";
 
 function Register() {
+  const { RegisterUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({ username: "", email: "", password: "" });
@@ -15,7 +17,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("users/register/", formData);
+      await RegisterUser(formData);
       alert("Account created successfully!");
       navigate("/login");
     } catch (error) {
@@ -69,6 +71,15 @@ function Register() {
               type="password"
               name="password"
               placeholder="Create a password"
+              className="auth-input"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="auth-input-group">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              name="password2"
               className="auth-input"
               onChange={handleChange}
             />

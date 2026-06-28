@@ -48,6 +48,32 @@
   align-items: center;
   gap: 16px;
 }
+.profile-menu{
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 220px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  padding: 15px;
+  z-index: 100;
+}
+
+.profile-menu p{
+  margin: 5px 0 15px;
+  color: gray;
+  font-size: 14px;
+}
+
+.profile-menu button{
+  width: 100%;
+  background: #e63946;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
 .pdp-logo {
   display: flex;
@@ -815,6 +841,10 @@
   gap: 3px;
 }
 
+.userimg{
+  width: 40px;
+  cursor: pointer;
+}
 .pdp-footer-copy { font-size: 12px; }
 
 /* =============================================
