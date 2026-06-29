@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -14,9 +15,15 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  try {
     await loginUser(formData.email, formData.password);
-    navigate('/');
-  };
+    setTimeout(() => {
+      navigate("/");
+    }, 100);
+  } catch (err) {
+    toast.error("Invalid email or password");
+  }
+};
 
   return (
     <div className="auth-page">

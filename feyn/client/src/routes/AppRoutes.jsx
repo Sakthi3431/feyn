@@ -49,7 +49,17 @@ function App() {
               <Route path="/seller/products" element={<PrivateRoute sellerOnly><SellerProducts /></PrivateRoute>} />
               <Route path="/seller/orders" element={<PrivateRoute sellerOnly><SellerOrders /></PrivateRoute>} /> */}
             </Routes>
-          </main>
+            </main>
+                 <Toaster
+                    position="top-right"
+                    toastOptions={{
+                      duration: 3000,
+                      style: {
+                        borderRadius: "12px",
+                        fontFamily: "Inter, sans-serif",
+                      },
+                    }}
+                  />
           <Footer />
         </CartProvider>
       </AuthProvider>

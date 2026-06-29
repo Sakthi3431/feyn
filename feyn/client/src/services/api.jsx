@@ -11,14 +11,16 @@ API.interceptors.request.use(config => {
 API.interceptors.response.use(
   res => res,
   async err => {
-    if (err.response?.status === 401) {
+    if (err.response?.status === 401 && 
+      !err.config.url.includes("/token/refresh/")
+    ) {
       const refresh = localStorage.getItem('refresh_token');
       if (refresh) {
         try {
-          const res = await axios.post('/api/users/token/refresh/', { refresh });
+          const res = await API.post('/api/users/token/refresh/', { refresh });
           localStorage.setItem('access_token', res.data.access);
           err.config.headers.Authorization = `Bearer ${res.data.access}`;
-          return axios(err.config);
+          return API(err.config);
         } catch {
           localStorage.clear();
           window.location.href = '/login';

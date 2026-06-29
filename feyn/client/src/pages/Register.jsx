@@ -18,14 +18,14 @@ function Register() {
     e.preventDefault();
     try {
       await RegisterUser(formData);
-      alert("Account created successfully!");
+      toast.success("Account created successfully")
       navigate("/login");
     } catch (error) {
       const data = error.response?.data;
       if (data?.username) setError(data.username[0]);
       else if (data?.email) setError(data.email[0]);
       else if (data?.password) setError(data.password[0]);
-      else setError("Registration failed. Try again.");
+      else toast.error("Registration failed. Try again.");
     }
   };
 
@@ -40,7 +40,7 @@ function Register() {
         <h2 className="auth-title">Create account</h2>
         <p className="auth-subtitle">Join Feyn and start shopping today</p>
 
-        {error && <div className="auth-error">{error}</div>}
+        {error && <div className="auth-error text-center text-red-500">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="auth-input-group">
