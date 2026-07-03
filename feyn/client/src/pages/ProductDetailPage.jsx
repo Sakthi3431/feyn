@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FiHeart, FiShoppingCart, FiStar, FiTruck, FiShield, FiMinus, FiPlus } from 'react-icons/fi';
@@ -7,10 +6,14 @@ import { productAPI } from '../services/api';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
-// import './ProductDetailPage.css';
+import "../css/ProductDetails.css";
+import Navbar from "../components/Navbar"
+import BreadCrumb from "../components/productdetails/BreadCrumb.jsx"
+import ProductImages from '../components/productdetails/ProductImages.jsx';
+import ProductDetails from '../components/productdetails/ProductDetails.jsx';
 
 export default function ProductDetailPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { addToCart, toggleWishlist, isWishlisted } = useCart();
@@ -22,26 +25,26 @@ export default function ProductDetailPage() {
   const [submittingReview, setSubmittingReview] = useState(false);
 
   useEffect(() => {
-    productAPI.getProduct(id).then(r => setProduct(r.data)).finally(() => setLoading(false));
-  }, [id]);
+    productAPI.getProduct(slug).then(r => setProduct(r.data)).finally(() => setLoading(false));
+  }, [slug]);
 
   if (loading) return <div className="loading-state">Loading...</div>;
   if (!product) return <div className="loading-state">Product not found</div>;
 
   const images = product.images || [];
   const primaryImg = images[activeImg]?.image;
-  const wishlisted = isWishlisted(product.id);
+  // const wishlisted = isWishlisted(product.slug);
+  const wishlist = false
   const discount = product.compare_price ? Math.round((1 - product.price / product.compare_price) * 100) : 0;
 
   const handleAddToCart = () => {
-    if (!user) { navigate('/login'); return; }
-    addToCart(product.id, qty);
+    
   };
 
-  const handleWishlist = () => {
-    if (!user) { navigate('/login'); return; }
-    toggleWishlist(product.id);
-  };
+  // const handleWishlist = () => {
+  //   if (!user) { navigate('/login'); return; }
+  //   toggleWishlist(product.id);
+  // };
 
   const handleReview = async (e) => {
     e.preventDefault();
@@ -50,7 +53,7 @@ export default function ProductDetailPage() {
     try {
       await productAPI.addReview(product.id, review);
       toast.success('Review added!');
-      const res = await productAPI.getProduct(id);
+      const res = await productAPI.getProduct(slug);
       setProduct(res.data);
       setReview({ rating: 5, title: '', comment: '' });
     } catch { toast.error('Could not add review'); }
@@ -58,6 +61,14 @@ export default function ProductDetailPage() {
   };
 
   return (
+  <>
+    <div className="container mx-auto p-4">    
+    <BreadCrumb product={product}/>  
+    <div className="pcard flex flex-col md:flex-row gap-10">
+    <ProductImages product= {product}/>
+    <ProductDetails product= {product}/> 
+    </div>
+    </div>
     <div className="product-detail-page">
       <div className="container">
         <div className="product-detail-grid">
@@ -114,9 +125,9 @@ export default function ProductDetailPage() {
               <button className="btn btn-primary detail-btn" onClick={handleAddToCart} disabled={product.stock === 0}>
                 <FiShoppingCart /> Add to Cart
               </button>
-              <button className={`wishlist-toggle ${wishlisted ? 'active' : ''}`} onClick={handleWishlist}>
+              {/* <button className={`wishlist-toggle ${wishlisted ? 'active' : ''}`} onClick={handleWishlist}>
                 {wishlisted ? <FaHeart /> : <FiHeart />}
-              </button>
+              </button> */}
             </div>
 
             <div className="detail-guarantees">
@@ -173,5 +184,6 @@ export default function ProductDetailPage() {
         </div>
       </div>
     </div>
+  </>
   );
 }

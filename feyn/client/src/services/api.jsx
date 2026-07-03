@@ -47,12 +47,12 @@ export const authAPI = {
 
 export const productAPI = {
   getProducts: params => API.get('/products/', { params }),
-  getProduct: id => API.get(`/products/${id}/`),
+  getProduct: slug => API.get(`/products/${slug}/`),
   getFeatured: () => API.get('/products/featured/'),
   getCategories: () => API.get('/products/categories/'),
   createProduct: data => API.post('/products/', data),
-  updateProduct: (id, data) => API.put(`/products/${id}/`, data),
-  deleteProduct: id => API.delete(`/products/${id}/`),
+  updateProduct: (slug, data) => API.put(`/products/${slug}/`, data),
+  deleteProduct: slug => API.delete(`/products/${slug}/`),
   getMyProducts: () => API.get('/products/my_products/'),
   addReview: (productId, data) => API.post(`/products/${productId}/reviews/`, data),
   getCart: () => API.get('/products/cart/'),

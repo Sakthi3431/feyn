@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
-
 function ProductDetails({}) {
     const [selectedVariant, setSelectedVariant] = useState(0);
     const [activeImage, setActiveImage] = useState(0);

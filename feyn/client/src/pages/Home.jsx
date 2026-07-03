@@ -52,7 +52,7 @@ const filteredProducts =
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
             {searchedProducts.map((product) => (
               <div key={product.id} className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
-                <Link to={`/product-card/${product.category}/${product.id}`}>
+                <Link to={`/api/products/${product.category_name}/${product.slug}`}>
                   <div className="product-card-img-wrap">
                     <img src={product.image} alt={product.name} className="w-full h-56 object-cover"/>
                   </div>
@@ -85,7 +85,7 @@ const filteredProducts =
       key={product.id}
       className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden"
     >
-      <Link to={`/product-card/${product.category}/${product.id}`}>
+      <Link to={`/products/${product.slug}`}>
         <img
           src={product.image}
           alt={product.name}
