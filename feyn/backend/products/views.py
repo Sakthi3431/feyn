@@ -14,7 +14,9 @@ class CategoryListView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
 class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.filter(is_active = True)
     permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = "slug"
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['category', 'is_featured', 'seller']
     search_fields = ['name', 'description']

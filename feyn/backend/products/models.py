@@ -76,3 +76,41 @@ class CartItem(models.Model):
 
     class Meta:
         unique_together = ('cart', 'product', 'variant')
+
+class ProductAttribute(models.Model):
+    product = models.ForeignKey(
+        Product,
+        related_name="attributes",
+        on_delete=models.CASCADE
+    ) 
+
+    name = models.CharField(max_length=100)
+    value = models.CharField(max_length=255)
+
+class ProductSpecification(models.Model):
+    product = models.ForeignKey(
+        Product,
+        related_name="specifications",
+        on_delete=models.CASCADE)
+    group = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    value = models.CharField(max_length=255)
+
+class ProductHighlight(models.Model):
+    product = models.ForeignKey(
+        Product,
+        related_name="highlights",
+        on_delete=models.CASCADE
+    )
+    title = models.CharField(max_length=50)
+    value = models.CharField(max_length=255)
+
+
+class ProductOffer(models.Model):
+    product = models.ForeignKey(
+        Product,
+        related_name="offers",
+        on_delete=models.CASCADE
+    )
+    title = models.CharField(max_length=100)
+    description = models.TextField()

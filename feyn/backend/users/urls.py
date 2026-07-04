@@ -13,5 +13,6 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('seller-profile/', views.SellerProfileView.as_view(), name='seller-profile'),
     path('sellers/', views.seller_list, name='sellers'),
+    path('me/', views.current_user),
     path('', include(router.urls)),
 ]
