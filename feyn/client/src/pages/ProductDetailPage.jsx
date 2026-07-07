@@ -65,79 +65,9 @@ export default function ProductDetailPage() {
     <div className="container mx-auto p-4">    
     <BreadCrumb product={product}/>  
     <div className="pcard flex flex-col md:flex-row gap-10">
-    <ProductImages product= {product}/>
-    <ProductDetails product= {product}/> 
+    <ProductImages product= {product} discount={discount}/>
+    <ProductDetails product= {product} discount={discount}/> 
     </div>
-    </div>
-    <div className="product-detail-page">
-      <div className="container">
-        <div className="product-detail-grid">
-          {/* Images */}
-          <div className="product-gallery">
-            <div className="main-image">
-              {primaryImg ? <img src={primaryImg} alt={product.name} /> : <div className="img-placeholder">🛍️</div>}
-              {discount > 0 && <span className="detail-discount-badge">-{discount}%</span>}
-            </div>
-            {images.length > 1 && (
-              <div className="thumbnail-strip">
-                {images.map((img, i) => (
-                  <button key={i} className={`thumbnail ${activeImg === i ? 'active' : ''}`} onClick={() => setActiveImg(i)}>
-                    <img src={img.image} alt={`View ${i + 1}`} />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Info */}
-          <div className="product-info-panel">
-            <div className="info-badges">
-              <span className="badge badge-primary">{product.category_name}</span>
-              {product.stock > 0 ? <span className="badge badge-success">In Stock</span> : <span className="badge badge-error">Out of Stock</span>}
-            </div>
-            <h1 className="detail-title">{product.name}</h1>
-            <div className="seller-info">By <strong>{product.seller_name}</strong></div>
-
-            <div className="detail-rating">
-              {[1,2,3,4,5].map(s => (
-                <FaStar key={s} className={s <= Math.round(product.rating) ? 'star-filled' : 'star-empty'} />
-              ))}
-              <span>{Number(product.rating).toFixed(1)} ({product.review_count} reviews)</span>
-            </div>
-
-            <div className="detail-price">
-              <span className="detail-main-price">₹{Number(product.price).toLocaleString()}</span>
-              {product.compare_price && (
-                <><span className="detail-compare-price">₹{Number(product.compare_price).toLocaleString()}</span>
-                <span className="detail-savings">Save {discount}%</span></>
-              )}
-            </div>
-
-            <p className="detail-description">{product.description}</p>
-
-            <div className="qty-selector">
-              <button onClick={() => setQty(q => Math.max(1, q - 1))}><FiMinus /></button>
-              <span>{qty}</span>
-              <button onClick={() => setQty(q => Math.min(product.stock, q + 1))}><FiPlus /></button>
-            </div>
-
-            <div className="detail-actions">
-              <button className="btn btn-primary detail-btn" onClick={handleAddToCart} disabled={product.stock === 0}>
-                <FiShoppingCart /> Add to Cart
-              </button>
-              {/* <button className={`wishlist-toggle ${wishlisted ? 'active' : ''}`} onClick={handleWishlist}>
-                {wishlisted ? <FaHeart /> : <FiHeart />}
-              </button> */}
-            </div>
-
-            <div className="detail-guarantees">
-              <div className="guarantee-item"><FiTruck /><span>Free delivery on orders over ₹500</span></div>
-              <div className="guarantee-item"><FiShield /><span>Secure payment & buyer protection</span></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Reviews */}
         <div className="reviews-section">
           <h2>Customer Reviews</h2>
           {product.reviews?.length > 0 ? (
@@ -182,7 +112,6 @@ export default function ProductDetailPage() {
             </div>
           )}
         </div>
-      </div>
     </div>
   </>
   );

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { productAPI } from "../services/api";
 import toast from "react-hot-toast";
+import Products from "../components/Home/Products";
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -49,27 +50,7 @@ const filteredProducts =
           <p className="search-results-label">
             Showing <strong>{searchedProducts.length}</strong> results for "{searchTerm}"
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
-            {searchedProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden">
-                <Link to={`/api/products/${product.category_name}/${product.slug}`}>
-                  <div className="product-card-img-wrap">
-                    <img src={product.image} alt={product.name} className="w-full h-56 object-cover"/>
-                  </div>
-                  <div className="p-4">
-                    <div className="font-semibold text-lg">{product.name}</div>
-                    <div className="text-blue-600 font-bold mt-2">₹{product.price}</div>
-                  </div>
-                </Link>
-                <div className="p-4 flex">
-                  <button className="w-full text-white py-2 rounded-lg hover:bg-orange-600"
-        style={{background: "#ff4d4d"}}>Add to Cart</button>
-                  <button className="w-full text-white py-2 rounded-lg hover:bg-orange-600"
-        style={{background: "#ff4d4d"}}>Buy Now</button>
-                </div>
-              </div>
-            ))}
-          </div>
+            <Products products={searchedProducts}/>
         </div>
       ) : (
         <>
@@ -79,42 +60,7 @@ const filteredProducts =
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
-  {filteredProducts.map(product => (
-<div
-      key={product.id}
-      className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden"
-    >
-      <Link to={`/products/${product.slug}`}>
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-56 object-cover"
-        />
-
-        <div className="p-4">
-          <h3 className="font-semibold text-lg">
-            {product.name}
-          </h3>
-
-          <p className="text-blue-600 font-bold mt-2">
-            ₹{product.price}
-          </p>
-        </div>
-      </Link>
- 
-      <div className="p-4 pt-0">
-        <button
-          className="w-full text-white py-2 rounded-lg hover:bg-orange-600"
-        style={{background: "#ff4d4d"}}
-        >
-          Buy Now
-        </button>
-      </div>
-    </div>
-    
-  ))}
-</div>
+          <Products products={filteredProducts}/>
         </>
       )}
     </>

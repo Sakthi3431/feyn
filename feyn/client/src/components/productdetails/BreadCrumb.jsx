@@ -8,7 +8,7 @@ function BreadCrumb({product}) {
     <div className='px-6 py-3 text-sm text-gray-500'>
       <div className="pdp-breadcrumb">
         <span><Link to="/">Home</Link></span><span className="sep"> / </span>
-            <Link to={`/category/${product.category}`}>
+            <Link to={`${product.category}`}>
               {product.category}
             </Link>
             <span className="sep"> / </span>
