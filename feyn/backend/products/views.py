@@ -3,10 +3,11 @@ from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Q
+from django.db.models import Q, Avg
 from .models import Category, Product, Review, Wishlist, Cart, CartItem
 from .serializers import (CategorySerializer, ProductListSerializer, ProductDetailSerializer,
                           ReviewSerializer, WishlistSerializer, CartSerializer, CartItemSerializer)
+
 
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.filter(parent=None)
@@ -59,13 +60,23 @@ class ReviewCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        product_id = self.kwargs['product_id']
-        product = Product.objects.get(id=product_id)
-        review = serializer.save(user=self.request.user, product=product)
-        reviews = product.reviews.all()
-        product.rating = sum(r.rating for r in reviews) / reviews.count()
-        product.review_count = reviews.count()
-        product.save()
+        product = Product.objects.get(id=self.kwargs["product_id"])
+        serializer.save(
+            user = self.request.user,
+            product=product
+        )
+        product.update_rating()
+class ProductReviewListView(generics.ListAPIView):
+    serializer_class = ReviewSerializer
+
+    def get_queryset(self):
+        product_id = self.kwargs["product_id"]
+        return (
+            Review.objects
+            .filter(product_id=product_id)
+            .select_related("user")
+            .order_by("-created_at")
+        )
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -128,3 +139,4 @@ def toggle_wishlist(request, product_id):
         item.delete()
         return Response({'wishlisted': False})
     return Response({'wishlisted': True})
+

@@ -1,5 +1,7 @@
 from django.db import models
+from django.db.models import Avg
 from users.models import User, SellerProfile
+from users.serializers import *
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -27,6 +29,11 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def update_rating(self):
+        reviews = self.reviews.all()
+        self.review_count = reviews.count()
+        self.rating = (reviews.aggregate(avg=Avg("rating"))["avg"] or 0)
+        self.save(update_fields=["rating","review_count"])
     def __str__(self):
         return self.name
 
@@ -61,6 +68,9 @@ class Wishlist(models.Model):
 
     class Meta:
         unique_together = ('user', 'product')
+
+        def __str__(self):
+            return self.user
 
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product, ProductImage, ProductVariant, Review, Wishlist, Cart, CartItem
+from .models import Category, Product, ProductImage, ProductVariant, Review, Wishlist, Cart, CartItem, ProductAttribute, ProductHighlight, ProductOffer, ProductSpecification
 
 class CategorySerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField()
@@ -20,13 +20,12 @@ class ProductVariantSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user_name = serializers.SerializerMethodField()
+    user_name = serializers.CharField(source="user.username", read_only=True)
     class Meta:
         model = Review
-        fields = ('id', 'user', 'user_name', 'rating', 'title', 'comment', 'created_at')
+        fields = ('id', 'user_name', 'rating', 'title', 'comment', 'created_at')
         read_only_fields = ('user',)
-    def get_user_name(self, obj):
-        return obj.user.username
+    read_only_fields = ("user")
 
 class ProductListSerializer(serializers.ModelSerializer):
     primary_image = serializers.SerializerMethodField()
@@ -85,3 +84,35 @@ class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wishlist
         fields = ('id', 'product', 'added_at')
+
+class ProductAttributeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductAttribute
+        fields = "__all__"
+
+class ProductSpecificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductSpecification
+        fields = "__all__"
+
+class ProductHighlightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductHighlight
+        fields = "__all__"
+
+class ProductOfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductOffer
+        fields = "__all__"
+
+class ProductSerializer(serializers.ModelSerializer):
+    attributes = ProductAttributeSerializer(many=True, read_only=True)
+    specifications = ProductSpecificationSerializer(many=True, read_only=True)
+    highlights = ProductHighlightSerializer(many=True, read_only=True)
+    variants = ProductVariantSerializer(many=True, read_only=True)
+    offers = ProductOfferSerializer(many=True, read_only=True)
+    images = ProductImageSerializer(many=True, read_only=True)
+    reviews = ReviewSerializer(many=True, read_only=True)
+    class Meta:
+        model = Product
+        fields = "__all__"
