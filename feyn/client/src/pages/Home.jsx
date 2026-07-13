@@ -22,7 +22,6 @@ export default function App() {
         productAPI.getCategories(),
         productAPI.getProducts(),
       ]);
-      
       setCategories(categoryRes.data);
       setProducts(productRes.data);
     } catch (error) {
@@ -42,10 +41,10 @@ const filteredProducts =
     : products.filter(
         product => product.category_name === selectedCategory
       );
-      console.log(products)
+      
   return (
     <>
-      <Navbar searchTserm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       {searchTerm.trim() ? (
         <div className="search-results">
           <p className="search-results-label">
