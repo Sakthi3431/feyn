@@ -42,6 +42,7 @@ const filteredProducts =
     : products.filter(
         product => product.category_name === selectedCategory
       );
+      console.log(products)
   return (
     <>
       <Navbar searchTserm={searchTerm} setSearchTerm={setSearchTerm} />

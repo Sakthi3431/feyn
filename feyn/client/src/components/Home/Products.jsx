@@ -1,15 +1,22 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useAuth } from '../../context/AuthContext';
+import toast from "react-hot-toast";
+import { useCart } from '../../context/CartContext';
 function Products({products}) {
+    const { wishlist, toggleWishlist, isWishlisted } = useCart();
+    const { user } = useAuth();
+    const navigate = useNavigate();
   return (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
   {products.map(product => (
 <div
   key={product.id}
   className="group bg-white rounded-2xl overflow-hidden border p-4 border-gray-200
              hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
 >
-      <Link to={`/products/${product.slug}`}>
+      
       {/* image */}
       <div className="relative bg-gray-50">
 
@@ -20,9 +27,22 @@ function Products({products}) {
     />
 
     <button
+        onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!user) {
+            navigate("/login");
+            return;
+        }
+
+        toggleWishlist(product.id);
+    }}
         className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full shadow flex items-center justify-center hover:bg-red-50"
-    >
-        🤍
+    >{isWishlisted(product.id)
+        ? <FaHeart className="text-red-500" />
+        : <FaRegHeart className="text-gray-500" />
+    }
     </button>
 
     {product.compare_price && (
@@ -35,6 +55,7 @@ function Products({products}) {
 
 </div>
 {/* title */}
+<Link to={`/products/${product.slug}`}>
 <h3 className="font-semibold text-lg mt-3 h-14 line-clamp-2">
     {product.name}
 </h3>
@@ -46,7 +67,7 @@ function Products({products}) {
     </span>
 
     <span className="text-gray-500 text-sm">
-        ({product.review_count} Reviews)
+        ({product.review_count || 0} Reviews)
     </span>
 
 </div>

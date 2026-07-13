@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   const contextData = {
     user,
+    loading,
     RegisterUser,
     loginUser,
     logoutUser,

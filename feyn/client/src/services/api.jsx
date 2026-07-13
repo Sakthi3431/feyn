@@ -55,6 +55,7 @@ export const productAPI = {
   deleteProduct: slug => API.delete(`/products/${slug}/`),
   getMyProducts: () => API.get('/products/my_products/'),
   addReview: (productId, data) => API.post(`/products/${productId}/reviews/`, data),
+  getReviews: (productId) =>  API.get(`/products/${productId}/reviews/`),
   getCart: () => API.get('/products/cart/'),
   addToCart: data => API.post('/products/cart/add/', data),
   updateCartItem: (id, data) => API.put(`/products/cart/update/${id}/`, data),

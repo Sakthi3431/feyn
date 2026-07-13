@@ -39,7 +39,6 @@ const variant = product.variants[selectedVariant];
     const stars =
     "★".repeat(Math.floor(product.rating)) +
     "☆".repeat(5 - Math.floor(product.rating));
-console.log(product)
   return (
     <>
     <div className="pdp-details-col">

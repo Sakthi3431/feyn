@@ -21,12 +21,28 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [qty, setQty] = useState(1);
   const [activeImg, setActiveImg] = useState(0);
-  const [review, setReview] = useState({ rating: 5, title: '', comment: '' });
+  const [reviews, setReviews] = useState([]);
+  const [review, setReview] = useState({
+    rating: 5,
+    title: "",
+    comment: ""
+});
   const [submittingReview, setSubmittingReview] = useState(false);
 
-  useEffect(() => {
-    productAPI.getProduct(slug).then(r => setProduct(r.data)).finally(() => setLoading(false));
-  }, [slug]);
+useEffect(() => {
+    const fetchProduct = async () => {
+        try {
+            const { data } = await productAPI.getProduct(slug);
+            setProduct(data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchProduct();
+}, [slug]);
 
   if (loading) return <div className="loading-state">Loading...</div>;
   if (!product) return <div className="loading-state">Product not found</div>;
@@ -41,28 +57,50 @@ export default function ProductDetailPage() {
     
   };
 
-  // const handleWishlist = () => {
-  //   if (!user) { navigate('/login'); return; }
-  //   toggleWishlist(product.id);
-  // };
+  const handleWishlist = () => {
+    if (!user) { navigate('/login'); return; }
+    toggleWishlist(product.id);
+  };
 
   const handleReview = async (e) => {
     e.preventDefault();
     if (!user) { navigate('/login'); return; }
     setSubmittingReview(true);
     try {
-      await productAPI.addReview(product.id, review);
-      toast.success('Review added!');
-      const res = await productAPI.getProduct(slug);
-      setProduct(res.data);
-      setReview({ rating: 5, title: '', comment: '' });
-    } catch { toast.error('Could not add review'); }
-    finally { setSubmittingReview(false); }
+    await productAPI.addReview(product.id, review);
+
+    toast.success("Review added!");
+
+    const [productRes, reviewsRes] = await Promise.all([
+        productAPI.getProduct(slug),
+        productAPI.getReviews(product.id),
+    ]);
+
+    setProduct(productRes.data);
+    setReviews(reviewsRes.data);
+
+    setReview({
+        rating: 5,
+        title: "",
+        comment: "",
+    });
+
+} catch (error) {
+    toast.error(
+        error.response?.data?.detail ||
+        JSON.stringify(error.response?.data) ||
+        "Could not add review"
+    );
+}
+    finally {
+    setSubmittingReview(false);
+}
   };
 
   return (
   <>
-    <div className="container mx-auto p-4">    
+    <div className="container mx-auto p-4">
+    <Navbar/>
     <BreadCrumb product={product}/>  
     <div className="pcard flex flex-col md:flex-row gap-10">
     <ProductImages product= {product} discount={discount}/>
@@ -91,25 +129,129 @@ export default function ProductDetailPage() {
           ) : <p className="no-reviews">No reviews yet. Be the first to review!</p>}
 
           {user && (
-            <div className="add-review">
-              <h3>Write a Review</h3>
-              <form onSubmit={handleReview}>
-                <div className="star-picker">
-                  {[1,2,3,4,5].map(s => (
-                    <button key={s} type="button" onClick={() => setReview({...review, rating: s})}>
-                      <FaStar className={s <= review.rating ? 'star-filled' : 'star-empty'} />
+            <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 mt-8">
+
+    <div className="flex items-center justify-between mb-6">
+
+        <div>
+            <h2 className="text-2xl font-bold">
+                Write a Review
+            </h2>
+
+            <p className="text-gray-500 text-sm mt-1">
+                Share your experience with this product.
+            </p>
+        </div>
+
+        <span className="bg-cyan-50 text-cyan-600 px-4 py-2 rounded-full text-sm font-semibold">
+            Your Opinion Matters
+        </span>
+
+    </div>
+
+    <form onSubmit={handleReview}>
+
+        {/* Rating */}
+
+        <div className="mb-6">
+
+            <label className="block text-sm font-semibold mb-3">
+                Overall Rating
+            </label>
+
+            <div className="flex gap-2">
+
+                {[1,2,3,4,5].map((s)=>(
+                    <button
+                        key={s}
+                        type="button"
+                        onClick={() =>
+                            setReview({
+                                ...review,
+                                rating:s
+                            })
+                        }
+                        className="transition hover:scale-125"
+                    >
+                        <FaStar
+                            size={28}
+                            className={
+                                s<=review.rating
+                                ? "text-yellow-400"
+                                : "text-gray-300"
+                            }
+                        />
                     </button>
-                  ))}
-                </div>
-                <input className="review-input" placeholder="Review title (optional)" value={review.title}
-                  onChange={e => setReview({...review, title: e.target.value})} />
-                <textarea className="review-input" rows="4" placeholder="Share your experience..." required
-                  value={review.comment} onChange={e => setReview({...review, comment: e.target.value})} />
-                <button type="submit" className="btn btn-primary btn-sm" disabled={submittingReview}>
-                  {submittingReview ? 'Submitting...' : 'Submit Review'}
-                </button>
-              </form>
+                ))}
+
             </div>
+
+        </div>
+
+        {/* Title */}
+
+        <div className="mb-5">
+
+            <label className="block text-sm font-semibold mb-2">
+                Review Title
+            </label>
+
+            <input
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 outline-none"
+                placeholder="Summarize your review..."
+                value={review.title}
+                onChange={(e)=>
+                    setReview({
+                        ...review,
+                        title:e.target.value
+                    })
+                }
+            />
+
+        </div>
+
+        {/* Review */}
+
+        <div className="mb-6">
+
+            <label className="block text-sm font-semibold mb-2">
+                Your Review
+            </label>
+
+            <textarea
+                rows={5}
+                required
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 resize-none focus:ring-2 focus:ring-cyan-400 outline-none"
+                placeholder="Tell others what you liked or disliked about this product..."
+                value={review.comment}
+                onChange={(e)=>
+                    setReview({
+                        ...review,
+                        comment:e.target.value
+                    })
+                }
+            />
+
+        </div>
+
+        {/* Button */}
+
+        <div className="flex justify-end">
+
+            <button
+                type="submit"
+                disabled={submittingReview}
+                className="px-8 py-3 rounded-xl bg-cyan-500 text-white font-semibold hover:bg-cyan-600 transition disabled:opacity-60"
+            >
+                {submittingReview
+                    ? "Submitting..."
+                    : "Submit Review"}
+            </button>
+
+        </div>
+
+    </form>
+</div>
           )}
         </div>
     </div>

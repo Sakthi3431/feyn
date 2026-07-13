@@ -1,12 +1,16 @@
 import {useState} from 'react'
 import products from '../../data/products';
 import { Link, useParams } from 'react-router-dom';
-
+import { useCart } from '../../context/CartContext';
+import { FaHeart,FaRegHeart  } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext';
 
 function ProductImages({ product, discount }) {
+  const {user} = useAuth()
+  const { toggleWishlist, isWishlisted } = useCart();
   const [selectedVariant, setSelectedVariant] = useState(0);
   const [activeImage, setActiveImage] = useState(0);
-  const [wishlist, setWishlist] = useState(false);
+  const wishlisted = product ? isWishlisted(product.id) : false;
   const [addedToCart, setAddedToCart] = useState(false);
   const [imgErrors, setImgErrors] = useState({});
 
@@ -43,6 +47,7 @@ const handleAddToCart = () => {
     "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/l/0/p/-original-imah7affxfg6zfwy.jpeg?q=70",
     "https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/i/7/c/-original-imah7affhmqghkqv.jpeg?q=70",
   ];
+
   return (
     <div className="pdp-main">
             <div className="pdp-images-col">
@@ -51,24 +56,35 @@ const handleAddToCart = () => {
               {!imgErrors[activeImage] ? (
                 <img
                   src={images[activeImage]}
-                  alt="Redmi Note 15 SE 5G"
+                  alt=""
                   className="pdp-main-image"
                   onError={() => handleImgError(activeImage)}
                 />
               ) : (
                 <div className="pdp-img-placeholder">
                   <span>📱</span>
-                  <span>Redmi Note 15 SE 5G</span>
+                  <span></span>
                 </div>
               )}
               <button
-                className={`pdp-wishlist-btn ${wishlist ? "active" : ""}`}
-                onClick={() => setWishlist(w => !w)}
-                aria-label="Wishlist"
+                  onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+
+                  if (!user) {
+                      navigate("/login");
+                      return;
+                  }
+
+                  toggleWishlist(product.id);
+              }}
+                  className="absolute top-5 right-5 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-red-50 transition"
               >
-                <svg viewBox="0 0 24 24" fill={wishlist ? "#ff3f6c" : "none"} stroke={wishlist ? "#ff3f6c" : "#666"} strokeWidth="2">
-                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-                </svg>
+                  {wishlisted ? (
+                      <FaHeart className="text-red-500 text-xl" />
+                  ) : (
+                      <FaRegHeart className="text-gray-500 text-xl" />
+                  )}
               </button>
               <div className="pdp-discount-badge">-{discount}%</div>
             </div>
