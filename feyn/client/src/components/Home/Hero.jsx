@@ -1,5 +1,5 @@
 import React from 'react'
-import "/home/emperor/Documents/projects/feyn/client/src/index.css"
+import "../../index.css"
 function Hero() {
     const buttonStlye = {    padding: "10px 20px",
     background: "#ff4d4d",
