@@ -15,18 +15,21 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [categories, setCategories] = useState([])
-  useEffect(() => {
+useEffect(() => {
   const fetchData = async () => {
     try {
-      const [categoryRes, productRes] = await Promise.all([
-        productAPI.getCategories(),
-        productAPI.getProducts(),
-      ]);
-      setCategories(categoryRes.data);
+      const productRes = await productAPI.getProducts();
+      console.log(productRes.data);
       setProducts(productRes.data);
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to load data");
+    } catch (err) {
+      console.log(err);
+    }
+
+    try {
+      const categoryRes = await productAPI.getCategories();
+      setCategories(categoryRes.data);
+    } catch (err) {
+      console.log("Category error:", err.response?.data);
     }
   };
 
@@ -41,7 +44,6 @@ const filteredProducts =
     : products.filter(
         product => product.category_name === selectedCategory
       );
-      
   return (
     <>
       <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
