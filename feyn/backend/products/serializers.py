@@ -2,12 +2,9 @@ from rest_framework import serializers
 from .models import Category, Product, ProductImage, ProductVariant, Review, Wishlist, Cart, CartItem, ProductAttribute, ProductHighlight, ProductOffer, ProductSpecification
 
 class CategorySerializer(serializers.ModelSerializer):
-    children = serializers.SerializerMethodField()
     class Meta:
         model = Category
-        fields = ('id', 'name', 'slug', 'image', 'parent', 'children')
-    def get_children(self, obj):
-        return CategorySerializer(obj.children.all(), many=True).data
+        fields = ("id", "name")
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
